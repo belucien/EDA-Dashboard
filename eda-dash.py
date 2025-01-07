@@ -1,3 +1,23 @@
+import subprocess
+import sys
+
+# Function to install a package
+def install_and_import(package):
+    try:
+        __import__(package)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        __import__(package)
+
+# Install required packages
+install_and_import("streamlit")
+install_and_import("pandas")
+install_and_import("json")
+install_and_import("PyPDF2")
+install_and_import("chardet")
+install_and_import("plotly")
+
+# Importing after ensuring all packages are installed
 import streamlit as st
 import pandas as pd
 import json
