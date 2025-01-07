@@ -1,19 +1,13 @@
-# 🎈 Blank app template
+# Quick Exploratory Data Analysis Dashboard
 
-A simple Streamlit app template for you to modify!
+A simple streamlit application created with python
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+This app gives you a quick view of data and selects visualizations to represent the data in the dataset provided.
 
-### How to run it on your own machine
+Best results will come from small/medium datasets.
 
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
+1. Run the app
 
    ```
-   $ streamlit run streamlit_app.py
+   https://eda-dashboard.streamlit.app/
    ```
