@@ -119,7 +119,7 @@ def generate_insights(df):
 
 # Streamlit UI Setup
 st.markdown(
-    "<h1 style='text-align: center;'>Interactive Data Dashboard</h1>",
+    "<h1 style='text-align: center;'>Interactive Exploratory Data Dashboard</h1>",
     unsafe_allow_html=True
 )
 
