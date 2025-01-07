@@ -21,7 +21,11 @@ def parse_csv(file):
 
 # Function to parse Excel files
 def parse_excel(file):
-    return pd.read_excel(file)
+    try:
+        return pd.read_excel(file)
+    except ImportError:
+        st.error("Missing optional dependency 'openpyxl'. Use pip or conda to install openpyxl.")
+        return None
 
 # Function to parse JSON files
 def parse_json(file):
@@ -30,11 +34,15 @@ def parse_json(file):
 
 # Function to parse PDF files (extracting text as placeholder)
 def parse_pdf(file):
-    reader = PdfReader(file)
-    text = ""
-    for page in reader.pages:
-        text += page.extract_text()
-    return pd.DataFrame({"Content": [text]})
+    try:
+        reader = PdfReader(file)
+        text = ""
+        for page in reader.pages:
+            text += page.extract_text()
+        return pd.DataFrame({"Content": [text]})
+    except Exception as e:
+        st.error(f"Error processing PDF: {e}")
+        return None
 
 # Function to generate visualizations dynamically
 def generate_visualizations(df):
@@ -110,7 +118,10 @@ def generate_insights(df):
     st.dataframe(df.describe())
 
 # Streamlit UI Setup
-st.title("Interactive Data Dashboard")
+st.markdown(
+    "<h1 style='text-align: center;'>Interactive Data Dashboard</h1>",
+    unsafe_allow_html=True
+)
 
 # File uploader
 uploaded_file = st.file_uploader("Upload a file (.csv, .xlsx, .json, .pdf):", type=["csv", "xlsx", "json", "pdf"])
@@ -131,14 +142,15 @@ if uploaded_file:
             st.error("Unsupported file type!")
 
         # Display the DataFrame
-        st.write("### Parsed Data")
-        st.dataframe(df)
+        if df is not None:
+            st.write("### Parsed Data")
+            st.dataframe(df)
 
-        # Generate data insights
-        generate_insights(df)
+            # Generate data insights
+            generate_insights(df)
 
-        # Generate visualizations
-        generate_visualizations(df)
+            # Generate visualizations
+            generate_visualizations(df)
 
     except Exception as e:
         st.error(f"An error occurred while processing the file: {e}")
